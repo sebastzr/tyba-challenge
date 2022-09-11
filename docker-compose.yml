@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./volumes/mongodb:/data/db
+    networks:
+      - app
+  api:
+    build: ./api
+    depends_on:
+      - mongo
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api:/app
+      - /app/node_modules/
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge

@@ -14,3 +14,12 @@ Content-Type: application/json
     "username": "sebas3",
     "password": "pass"
 }
+
+###
+GET http://localhost:3000/api/restaurants
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlYmFzMyIsImlhdCI6MTY2Mjg1NDA4MiwiZXhwIjoxNjYyODYxMjgyfQ.5AlAqQ7eN5DDGnkJuDiy7k4iF3NSEP-cxacQw7B0na4
+Content-Type: application/json
+
+{
+    "city": "Pereira"
+}
