@@ -16,8 +16,12 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:3000/api/logout
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlYmFzMyIsImlhdCI6MTY2Mjg2MzAyMCwiZXhwIjoxNjYyODcwMjIwfQ.TIEyM5dqxX_0jHg6nY7F8R2LIDaNaytM_sB76or-Lwo
+
+###
 GET http://localhost:3000/api/restaurants
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlYmFzMyIsImlhdCI6MTY2Mjg1NDA4MiwiZXhwIjoxNjYyODYxMjgyfQ.5AlAqQ7eN5DDGnkJuDiy7k4iF3NSEP-cxacQw7B0na4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlYmFzMyIsImlhdCI6MTY2Mjg2MzAyMCwiZXhwIjoxNjYyODcwMjIwfQ.TIEyM5dqxX_0jHg6nY7F8R2LIDaNaytM_sB76or-Lwo
 Content-Type: application/json
 
 {

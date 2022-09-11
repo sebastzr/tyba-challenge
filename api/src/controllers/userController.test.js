@@ -1,8 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
+const authModel = require("../models/authModel");
 const userValidation = require("../models/userValidation");
-const { registerUser, loginUser } = require("./userController");
+const { registerUser, loginUser, logoutUser } = require("./userController");
 
 jest.mock("bcryptjs");
 jest.mock("jsonwebtoken");
@@ -17,6 +18,11 @@ jest.mock("../models/userModel", () => {
     findOne: jest.fn().mockReturnThis(),
   };
 });
+jest.mock("../models/authModel", () => {
+  return {
+    create: jest.fn().mockReturnThis(),
+  };
+});
 
 const res = {
   status: jest.fn(() => res),
@@ -24,6 +30,9 @@ const res = {
 };
 
 const defaultRequest = {
+  headers: {
+    authorization: "ok",
+  },
   body: {
     username: "sebas",
     password: "pass",
@@ -207,5 +216,34 @@ describe("loginUser", () => {
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledTimes(1);
     expect(res.json).toHaveBeenCalledWith("error");
+  });
+});
+
+describe("logout", () => {
+  it("should return status 500 if create auth model fails", async () => {
+    const createAuthSpy = jest
+      .spyOn(authModel, "create")
+      .mockImplementation(() => {
+        throw "error";
+      });
+    const result = logoutUser(defaultRequest, res);
+
+    expect(createAuthSpy).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledTimes(1);
+    expect(res.json).toHaveBeenCalledWith("error");
+  });
+
+  it("should return status 200 if create a auth model", async () => {
+    const createAuthSpy = jest.spyOn(authModel, "create").mockReturnValue("ok");
+
+    const result = await logoutUser(defaultRequest, res);
+
+    expect(createAuthSpy).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledTimes(1);
+    expect(res.json).toHaveBeenCalledWith("See U");
   });
 });

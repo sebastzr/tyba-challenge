@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 const userValidation = require("../models/userValidation");
+const authModel = require("../models/authModel");
 
 const registerUser = async (req, res) => {
   const validation = await userValidation.validate(req.body);
@@ -40,9 +41,17 @@ const loginUser = async (req, res) => {
   }
 };
 
-const logoutUser = async (req, res) => {};
+const logoutUser = async (req, res) => {
+  try {
+    await authModel.create({ token: req.headers["authorization"] });
+    res.status(200).json("See U");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
 };
