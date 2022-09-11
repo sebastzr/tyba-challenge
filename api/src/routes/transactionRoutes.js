@@ -1,15 +1,14 @@
 const { Router } = require("express");
-const router = Router();
+const { getTransactions } = require("../controllers/transactionController");
 const { authenticateToken } = require("../middleware/auth");
 const { saveTransaction } = require("../middleware/logTransaction");
-
-const { searchRestaurants } = require("../controllers/restaurantController");
+const router = Router();
 
 router.get(
-  "/api/restaurants",
+  "/api/transactions",
   authenticateToken,
   saveTransaction,
-  searchRestaurants
+  getTransactions
 );
 
 module.exports = router;
